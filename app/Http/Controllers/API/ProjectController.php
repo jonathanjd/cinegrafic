@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -26,21 +27,29 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
 
-        \Log::info($request->all());
         //
         $this->validate($request, [
             'cod' => 'required|string|unique:projects',
-            'name' => 'reqwuired|string'
+            'name' => 'required|string',
+            'users' => 'required'
         ]);
 
         $project = new Project();
         $project->cod = $request->cod;
         $project->name = $request->name;
 
-        /* if ($project->save()) {
+
+        if ($project->save()) {
             # code...
-            $project->users()->sync($request->user_id);
-        } */
+            $array = [];
+
+            foreach ($request->users as $user) {
+                # code...
+                array_push($array, $user[0]);
+            }
+
+            $project->users()->attach($array);
+        }
 
         $data = [
             'message' => 'success',

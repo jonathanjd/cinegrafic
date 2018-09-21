@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import NavBar from '../Share/NavBar';
 import MyMessage from '../Share/Message';
+import MyFormCreate from './FormCreate';
 import { Grid, Col, Row, Panel } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ClipLoader } from 'react-spinners';
@@ -19,6 +20,11 @@ class Project extends Component {
         );
     }
 
+    componentDidMount() {
+        const { fetchUserList } = this.props;
+        fetchUserList();
+    }
+
     handleClickCreateProject() {
         const { showFormCreate } = this.state;
         let getValue = showFormCreate;
@@ -30,8 +36,13 @@ class Project extends Component {
     }
 
     render() {
-        const { showAlertMessage } = this.state;
-        const { myMessageType, myMessageMessage } = this.props;
+        const { showAlertMessage, showFormCreate } = this.state;
+        const {
+            myMessageType,
+            myMessageMessage,
+            myUsers,
+            fetchProjectCreate
+        } = this.props;
 
         return (
             <Fragment>
@@ -62,6 +73,12 @@ class Project extends Component {
                                 Proyecto
                             </button>
                         </Col>
+                        {showFormCreate ? (
+                            <MyFormCreate
+                                myUsers={myUsers}
+                                myFetchProjectCreate={fetchProjectCreate}
+                            />
+                        ) : null}
                     </Row>
                 </Grid>
             </Fragment>

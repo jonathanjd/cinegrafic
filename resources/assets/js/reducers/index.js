@@ -8,11 +8,13 @@ import {
 // import reducers...
 import user from './UserReducer';
 import message from './MessageReducer';
+import project from './ProjectReducer';
 
 
 const rootReducer = combineReducers({
     user,
     message,
+    project,
     form: reduxForm,
 });
 

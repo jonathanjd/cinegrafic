@@ -37,7 +37,7 @@ class DashBoard extends Component {
                                                     <Panel.Title componentClass="h3" className="text-center">Proyectos</Panel.Title>
                                                 </Panel.Heading>
                                                 <Panel.Body>
-                                                    <a href="#" className="btn btn-success btn-block">Entrar</a>
+                                                    <Link to="/admin/proyecto" className="btn btn-success btn-block">Entrar</Link>
                                                 </Panel.Body>
                                             </Panel>
                                         </Col>

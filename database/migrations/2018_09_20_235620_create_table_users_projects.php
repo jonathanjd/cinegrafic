@@ -14,10 +14,10 @@ class CreateTableUsersProjects extends Migration
     public function up()
     {
         //
-        Schema::create('users_projects', function (Blueprint $table) {
-            $table->integer('user_id');
-            $table->integer('project_id');
-            $table->primary(['user_id', 'project_id']);
+        Schema::create('project_user', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->integer('project_id')->unsigned();
         });
     }
 
@@ -29,6 +29,6 @@ class CreateTableUsersProjects extends Migration
     public function down()
     {
         //
-        Schema::drop('users_projects');
+        Schema::drop('project_user');
     }
 }
