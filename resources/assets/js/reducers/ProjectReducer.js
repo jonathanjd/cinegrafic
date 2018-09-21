@@ -6,6 +6,9 @@ import {
     FETCH_PROJECT_LIST_REQUEST,
     FETCH_PROJECT_LIST_SUCCESS,
     FETCH_PROJECT_LIST_ERROR,
+    FETCH_PAGINATION_REQUEST,
+    FETCH_PAGINATION_SUCCESS,
+    FETCH_PAGINATION_ERROR,
 } from '../actions/actionTypes';
 
 // Initial State
@@ -15,40 +18,36 @@ const initialState = {
     data: [],
     projects: [],
     prev_page_url: null,
-    next_page_url: null,
-    current_page: '',
-    last_page: '',
-    path: '',
+    next_page_url: null
 };
 
 export default function userReducer(state = initialState, action) {
-
     switch (action.type) {
         case FETCH_PROJECT_CREATE_REQUEST:
             return {
                 ...state,
                 loading: true
-            }
+            };
 
         case FETCH_PROJECT_CREATE_SUCCESS:
             return {
                 ...state,
                 loading: false,
-                message: action.payload,
-            }
+                message: action.payload
+            };
 
         case FETCH_PROJECT_CREATE_ERROR:
             return {
                 ...state,
                 loading: false,
-                message: action.payload,
-            }
+                message: action.payload
+            };
 
         case FETCH_PROJECT_LIST_REQUEST:
             return {
                 ...state,
                 loading: true
-            }
+            };
 
         case FETCH_PROJECT_LIST_SUCCESS:
             return {
@@ -56,22 +55,41 @@ export default function userReducer(state = initialState, action) {
                 loading: false,
                 data: action.payload,
                 projects: action.payload.data,
-                current_page: action.payload.current_page,
-                last_page: action.payload.last_page,
                 prev_page_url: action.payload.prev_page_url,
-                next_page_url: action.payload.next_page_url,
-                path: action.payload.path,
-            }
+                next_page_url: action.payload.next_page_url
+            };
 
         case FETCH_PROJECT_LIST_ERROR:
             return {
                 ...state,
                 loading: false,
-                message: action.payload,
-            }
+                message: action.payload
+            };
+
+        case FETCH_PAGINATION_REQUEST:
+            return {
+                ...state,
+                loading: true
+            };
+
+        case FETCH_PAGINATION_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                data: action.payload,
+                projects: action.payload.data,
+                prev_page_url: action.payload.prev_page_url,
+                next_page_url: action.payload.next_page_url
+            };
+
+        case FETCH_PAGINATION_ERROR:
+            return {
+                ...state,
+                loading: false,
+                message: action.payload
+            };
 
         default:
             return state;
     }
-
-};
+}

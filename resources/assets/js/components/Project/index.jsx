@@ -3,6 +3,7 @@ import NavBar from '../Share/NavBar';
 import MyMessage from '../Share/Message';
 import MyFormCreate from './FormCreate';
 import MyTable from './MyTable';
+import Pagination from '../Share/Pagination';
 import { Grid, Col, Row, Panel } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ClipLoader } from 'react-spinners';
@@ -71,7 +72,10 @@ class Project extends Component {
             fetchProjectCreate,
             changeMessageAlert,
             myLoading,
-            myProjects
+            myProjects,
+            myPrevPageUrl,
+            myNextPageUrl,
+            fetchPagination
         } = this.props;
 
         return (
@@ -122,7 +126,16 @@ class Project extends Component {
                                             color={'#337ab7'}
                                         />
                                     ) : (
-                                        <MyTable myProjects={myProjects} />
+                                        <Fragment>
+                                            <MyTable myProjects={myProjects} />
+                                            <Pagination
+                                                myPrevPageUrl={myPrevPageUrl}
+                                                myNextPageUrl={myNextPageUrl}
+                                                myFetchPagination={
+                                                    fetchPagination
+                                                }
+                                            />
+                                        </Fragment>
                                     )}
                                 </Panel.Body>
                             </Panel>
