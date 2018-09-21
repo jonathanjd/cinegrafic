@@ -90964,6 +90964,8 @@ var Project = function (_Component) {
         };
 
         _this.handleClickCreateProject = _this.handleClickCreateProject.bind(_this);
+        _this.myCloseCreateProject = _this.myCloseCreateProject.bind(_this);
+        _this.showMessage = _this.showMessage.bind(_this);
         return _this;
     }
 
@@ -90973,6 +90975,21 @@ var Project = function (_Component) {
             var fetchUserList = this.props.fetchUserList;
 
             fetchUserList();
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+            var _this2 = this;
+
+            var showAlertMessage = this.state.showAlertMessage;
+
+            if (showAlertMessage) {
+                setTimeout(function () {
+                    _this2.setState({
+                        showAlertMessage: false
+                    });
+                }, 3000);
+            }
         }
     }, {
         key: 'handleClickCreateProject',
@@ -90987,6 +91004,20 @@ var Project = function (_Component) {
             });
         }
     }, {
+        key: 'myCloseCreateProject',
+        value: function myCloseCreateProject() {
+            this.setState({
+                showFormCreate: false
+            });
+        }
+    }, {
+        key: 'showMessage',
+        value: function showMessage() {
+            this.setState({
+                showAlertMessage: true
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             var _state = this.state,
@@ -90996,7 +91027,8 @@ var Project = function (_Component) {
                 myMessageType = _props.myMessageType,
                 myMessageMessage = _props.myMessageMessage,
                 myUsers = _props.myUsers,
-                fetchProjectCreate = _props.fetchProjectCreate;
+                fetchProjectCreate = _props.fetchProjectCreate,
+                changeMessageAlert = _props.changeMessageAlert;
 
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -91042,7 +91074,10 @@ var Project = function (_Component) {
                         ),
                         showFormCreate ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__FormCreate__["a" /* default */], {
                             myUsers: myUsers,
-                            myFetchProjectCreate: fetchProjectCreate
+                            myFetchProjectCreate: fetchProjectCreate,
+                            myCloseCreateProject: this.myCloseCreateProject,
+                            myShowMessage: this.showMessage,
+                            myChangeMessageAlert: changeMessageAlert
                         }) : null
                     )
                 )
@@ -91089,7 +91124,8 @@ var FormCreate = function (_Component) {
         var _this = _possibleConstructorReturn(this, (FormCreate.__proto__ || Object.getPrototypeOf(FormCreate)).call(this, props));
 
         _this.state = {
-            users: []
+            users: [],
+            showValidate: false
         };
         _this.onSubmit = _this.onSubmit.bind(_this);
         _this.addUser = _this.addUser.bind(_this);
@@ -91102,13 +91138,34 @@ var FormCreate = function (_Component) {
         key: 'onSubmit',
         value: function onSubmit(values) {
             var users = this.state.users;
-            var myFetchProjectCreate = this.props.myFetchProjectCreate;
+            var _props = this.props,
+                myFetchProjectCreate = _props.myFetchProjectCreate,
+                reset = _props.reset,
+                myCloseCreateProject = _props.myCloseCreateProject,
+                myShowMessage = _props.myShowMessage,
+                myChangeMessageAlert = _props.myChangeMessageAlert;
 
             var data = {};
             data.cod = values.cod;
             data.name = values.name;
             data.users = users;
-            myFetchProjectCreate(data);
+            var message = {
+                type: 'success',
+                message: 'Proyecto creado con Éxito'
+            };
+
+            if (users.length > 0) {
+                myFetchProjectCreate(data).then(function () {
+                    myChangeMessageAlert(message);
+                    myShowMessage();
+                    reset();
+                    myCloseCreateProject();
+                });
+            } else {
+                this.setState({
+                    showValidate: true
+                });
+            }
         }
     }, {
         key: 'checkItem',
@@ -91137,6 +91194,20 @@ var FormCreate = function (_Component) {
             }
         }
     }, {
+        key: 'validateUser',
+        value: function validateUser(Alert) {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                Alert,
+                { bsStyle: 'danger' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'strong',
+                    null,
+                    'Ops!'
+                ),
+                ' Debes seleccionar usuario para el proyecto.'
+            );
+        }
+    }, {
         key: 'renderError',
         value: function renderError(field) {
             var _field$meta = field.meta,
@@ -91163,11 +91234,13 @@ var FormCreate = function (_Component) {
         value: function render() {
             var _this2 = this;
 
-            var _props = this.props,
-                handleSubmit = _props.handleSubmit,
-                submitting = _props.submitting,
-                myUsers = _props.myUsers;
-            var users = this.state.users;
+            var _props2 = this.props,
+                handleSubmit = _props2.handleSubmit,
+                submitting = _props2.submitting,
+                myUsers = _props2.myUsers;
+            var _state = this.state,
+                users = _state.users,
+                showValidate = _state.showValidate;
 
 
             var getUser = users.map(function (user) {
@@ -91274,6 +91347,7 @@ var FormCreate = function (_Component) {
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
                             listUsers
                         ),
+                        users.length < 1 && showValidate ? this.validateUser(__WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["a" /* Alert */]) : null,
                         users.length > 0 ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             __WEBPACK_IMPORTED_MODULE_1_react_bootstrap__["h" /* ListGroup */],
                             null,

@@ -18,11 +18,24 @@ class Project extends Component {
         this.handleClickCreateProject = this.handleClickCreateProject.bind(
             this
         );
+        this.myCloseCreateProject = this.myCloseCreateProject.bind(this);
+        this.showMessage = this.showMessage.bind(this);
     }
 
     componentDidMount() {
         const { fetchUserList } = this.props;
         fetchUserList();
+    }
+
+    componentDidUpdate() {
+        const { showAlertMessage } = this.state;
+        if (showAlertMessage) {
+            setTimeout(() => {
+                this.setState({
+                    showAlertMessage: false
+                });
+            }, 3000);
+        }
     }
 
     handleClickCreateProject() {
@@ -35,13 +48,26 @@ class Project extends Component {
         });
     }
 
+    myCloseCreateProject() {
+        this.setState({
+            showFormCreate: false
+        });
+    }
+
+    showMessage() {
+        this.setState({
+            showAlertMessage: true
+        });
+    }
+
     render() {
         const { showAlertMessage, showFormCreate } = this.state;
         const {
             myMessageType,
             myMessageMessage,
             myUsers,
-            fetchProjectCreate
+            fetchProjectCreate,
+            changeMessageAlert
         } = this.props;
 
         return (
@@ -77,6 +103,9 @@ class Project extends Component {
                             <MyFormCreate
                                 myUsers={myUsers}
                                 myFetchProjectCreate={fetchProjectCreate}
+                                myCloseCreateProject={this.myCloseCreateProject}
+                                myShowMessage={this.showMessage}
+                                myChangeMessageAlert={changeMessageAlert}
                             />
                         ) : null}
                     </Row>

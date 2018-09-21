@@ -17,7 +17,8 @@ class FormCreate extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            users: []
+            users: [],
+            showValidate: false
         };
         this.onSubmit = this.onSubmit.bind(this);
         this.addUser = this.addUser.bind(this);
@@ -27,12 +28,34 @@ class FormCreate extends Component {
 
     onSubmit(values) {
         const { users } = this.state;
-        const { myFetchProjectCreate } = this.props;
+        const {
+            myFetchProjectCreate,
+            reset,
+            myCloseCreateProject,
+            myShowMessage,
+            myChangeMessageAlert
+        } = this.props;
         const data = {};
         data.cod = values.cod;
         data.name = values.name;
         data.users = users;
-        myFetchProjectCreate(data);
+        const message = {
+            type: 'success',
+            message: 'Proyecto creado con Éxito'
+        };
+
+        if (users.length > 0) {
+            myFetchProjectCreate(data).then(() => {
+                myChangeMessageAlert(message);
+                myShowMessage();
+                reset();
+                myCloseCreateProject();
+            });
+        } else {
+            this.setState({
+                showValidate: true
+            });
+        }
     }
 
     checkItem(value) {
@@ -55,6 +78,15 @@ class FormCreate extends Component {
         }
     }
 
+    validateUser(Alert) {
+        return (
+            <Alert bsStyle="danger">
+                <strong>Ops!</strong> Debes seleccionar usuario para el
+                proyecto.
+            </Alert>
+        );
+    }
+
     renderError(field) {
         const {
             meta: { submitFailed, error }
@@ -71,7 +103,7 @@ class FormCreate extends Component {
 
     render() {
         const { handleSubmit, submitting, myUsers } = this.props;
-        const { users } = this.state;
+        const { users, showValidate } = this.state;
 
         const getUser = users.map(user => {
             return (
@@ -161,6 +193,9 @@ class FormCreate extends Component {
                             <br />
                             {listUsers}
                         </FormGroup>
+                        {users.length < 1 && showValidate
+                            ? this.validateUser(Alert)
+                            : null}
                         {users.length > 0 ? (
                             <ListGroup>
                                 <p>
