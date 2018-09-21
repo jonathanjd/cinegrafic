@@ -3,7 +3,7 @@ import { Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const MyTable = props => {
-    const { myProjects } = props;
+    const { myProjects, fncShowModalOpen } = props;
     const ListProjects = myProjects.map(project => {
         const { id, cod, name } = project;
         return (
@@ -16,6 +16,7 @@ const MyTable = props => {
                         title="Mostrar Proyecto"
                         type="button"
                         className="btn btn-info"
+                        onClick={() => fncShowModalOpen(id)}
                     >
                         <FontAwesomeIcon icon="eye" />
                     </button>{' '}

@@ -3,6 +3,7 @@ import NavBar from '../Share/NavBar';
 import MyMessage from '../Share/Message';
 import MyFormCreate from './FormCreate';
 import MyTable from './MyTable';
+import ModalShow from './ModalShow';
 import Pagination from '../Share/Pagination';
 import { Grid, Col, Row, Panel } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,7 +15,8 @@ class Project extends Component {
         this.state = {
             showFormCreate: false,
             showFormEdit: false,
-            showAlertMessage: false
+            showAlertMessage: false,
+            show: false
         };
 
         this.handleClickCreateProject = this.handleClickCreateProject.bind(
@@ -22,6 +24,8 @@ class Project extends Component {
         );
         this.myCloseCreateProject = this.myCloseCreateProject.bind(this);
         this.showMessage = this.showMessage.bind(this);
+        this.showModalOpen = this.showModalOpen.bind(this);
+        this.showModalClose = this.showModalClose.bind(this);
     }
 
     componentDidMount() {
@@ -63,8 +67,22 @@ class Project extends Component {
         });
     }
 
+    showModalOpen(id) {
+        const { fetchProjectShow } = this.props;
+        this.setState({
+            show: true
+        });
+        fetchProjectShow(id);
+    }
+
+    showModalClose() {
+        this.setState({
+            show: false
+        });
+    }
+
     render() {
-        const { showAlertMessage, showFormCreate } = this.state;
+        const { showAlertMessage, showFormCreate, show } = this.state;
         const {
             myMessageType,
             myMessageMessage,
@@ -75,7 +93,9 @@ class Project extends Component {
             myProjects,
             myPrevPageUrl,
             myNextPageUrl,
-            fetchPagination
+            fetchPagination,
+            myProject,
+            myUsersByProject
         } = this.props;
 
         return (
@@ -127,7 +147,12 @@ class Project extends Component {
                                         />
                                     ) : (
                                         <Fragment>
-                                            <MyTable myProjects={myProjects} />
+                                            <MyTable
+                                                myProjects={myProjects}
+                                                fncShowModalOpen={
+                                                    this.showModalOpen
+                                                }
+                                            />
                                             <Pagination
                                                 myPrevPageUrl={myPrevPageUrl}
                                                 myNextPageUrl={myNextPageUrl}
@@ -139,6 +164,14 @@ class Project extends Component {
                                     )}
                                 </Panel.Body>
                             </Panel>
+                            {/* My Modal Show Project */}
+                            <ModalShow
+                                myShow={show}
+                                fncShowModalClose={this.showModalClose}
+                                myLoading={myLoading}
+                                myProject={myProject}
+                                myUsersByProject={myUsersByProject}
+                            />
                         </Col>
                     </Row>
                 </Grid>

@@ -24,13 +24,13 @@ const initialState = {
     }
 };
 
-export default function userReducer(state = initialState, action){
+export default function userReducer(state = initialState, action) {
 
     switch (action.type) {
         case FETCH_USER_CREATE_REQUEST:
             return {
                 ...state,
-                loading:true
+                loading: true
             }
 
         case FETCH_USER_CREATE_SUCCESS:
@@ -50,7 +50,7 @@ export default function userReducer(state = initialState, action){
         case FETCH_USER_LIST_REQUEST:
             return {
                 ...state,
-                loading:true
+                loading: true
             }
 
         case FETCH_USER_LIST_SUCCESS:

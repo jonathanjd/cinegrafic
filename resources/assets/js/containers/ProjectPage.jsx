@@ -1,7 +1,11 @@
 //dependecias
 import { connect } from 'react-redux';
 import { changeMessageAlert } from '../actions/MessageActions';
-import { fetchProjectCreate, fetchProjectList } from '../actions/ProjectAction';
+import {
+    fetchProjectCreate,
+    fetchProjectList,
+    fetchProjectShow
+} from '../actions/ProjectAction';
 import { fetchUserList } from '../actions/UserActions';
 import { fetchPagination } from '../actions/PaginationAction';
 //component
@@ -15,13 +19,16 @@ export default connect(
         myLoading: state.project.loading,
         myProjects: state.project.projects,
         myPrevPageUrl: state.project.prev_page_url,
-        myNextPageUrl: state.project.next_page_url
+        myNextPageUrl: state.project.next_page_url,
+        myProject: state.project.project,
+        myUsersByProject: state.project.usersByProject
     }),
     {
         changeMessageAlert,
         fetchProjectCreate,
         fetchUserList,
         fetchProjectList,
-        fetchPagination
+        fetchPagination,
+        fetchProjectShow
     }
 )(Project);

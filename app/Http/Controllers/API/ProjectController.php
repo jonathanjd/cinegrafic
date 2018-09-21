@@ -71,6 +71,9 @@ class ProjectController extends Controller
     public function show($id)
     {
         //
+        $project = Project::find($id);
+        $project->users;
+        return response()->json($project, 200);
     }
 
     /**
