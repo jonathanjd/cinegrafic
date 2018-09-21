@@ -7,7 +7,7 @@ class NavBar extends Component {
             <Navbar collapseOnSelect>
                 <Navbar.Header>
                     <Navbar.Brand>
-                    <a href="#brand">My App</a>
+                    <a href="/admin/dashboard">My App</a>
                     </Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>
@@ -16,10 +16,10 @@ class NavBar extends Component {
                         <NavItem eventKey={1} href="#">
                             Registros
                         </NavItem>
-                        <NavItem eventKey={1} href="#">
+                        <NavItem eventKey={1} href="/admin/proyecto">
                             Proyectos
                         </NavItem>
-                        <NavItem eventKey={2} href="#">
+                        <NavItem eventKey={2} href="/admin/usuario">
                             Usuarios
                         </NavItem>
                     </Nav>

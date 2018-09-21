@@ -35,4 +35,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $dates = ['deleted_at'];
+
+    public function projects()
+    {
+        # code...
+        return $this->belongsToMany(Project::class);
+    }
 }

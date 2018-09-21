@@ -6,7 +6,7 @@ const FormCreate = (props) => {
 
 
     const onSubmit = (values) => {
-        const { myFetchUserCreate, myShowMessage, reset, myFetchUserList, myChangeMessageAlert } = props;
+        const { myFetchUserCreate, myShowMessage, reset, myFetchUserList, myChangeMessageAlert, myHandler } = props;
         const message = {
             type: 'success',
             message: 'Usuario creado con Éxito'
@@ -16,6 +16,7 @@ const FormCreate = (props) => {
             myShowMessage();
             reset();
             myFetchUserList();
+            myHandler();
         });
     }
 

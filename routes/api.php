@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
  */
 
 Route::apiResource('users', 'API\UserController');
+Route::apiResource('projects', 'API\ProjectController');
 
 /* Route::group(['prefix' => 'auth'], function () {
     Route::post('login', 'API\AuthController@login');

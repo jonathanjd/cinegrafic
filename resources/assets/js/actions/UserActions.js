@@ -1,6 +1,8 @@
 // Dependencies
 import axios from 'axios';
-import { myURL } from '../utils/url';
+import {
+    myURL
+} from '../utils/url';
 // Action Types
 import {
     FETCH_USER_CREATE_REQUEST,
@@ -17,8 +19,11 @@ import {
     GET_USER_DATA_EDIT_STATUS,
 } from './actionTypes';
 
-import { request, received, error } from
-'./baseActions';
+import {
+    request,
+    received,
+    error
+} from './baseActions';
 
 export const fetchUserCreate = (data) => dispatch => {
     dispatch(request(FETCH_USER_CREATE_REQUEST));
@@ -32,7 +37,7 @@ export const fetchUserCreate = (data) => dispatch => {
                 dispatch(error(FETCH_USER_UPDATE_ERROR, response.data));
                 reject();
             }
-        }).catch( error => {
+        }).catch(error => {
             dispatch(error(FETCH_USER_UPDATE_ERROR, error.response));
             reject();
         });
@@ -53,7 +58,7 @@ export const fetchUserUpdate = (data) => dispatch => {
                 dispatch(error(FETCH_USER_CREATE_ERROR, response.data));
                 reject();
             }
-        }).catch( error => {
+        }).catch(error => {
             dispatch(error(FETCH_USER_CREATE_ERROR, error.response));
             reject();
         });
@@ -74,7 +79,7 @@ export const fetchUserList = () => dispatch => {
                 dispatch(error(FETCH_USER_LIST_ERROR, response.data));
                 reject();
             }
-        }).catch( error => {
+        }).catch(error => {
             dispatch(error(FETCH_USER_LIST_ERROR, error.response));
             reject();
         });
