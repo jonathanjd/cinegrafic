@@ -24,6 +24,7 @@ class FormCreate extends Component {
         this.addUser = this.addUser.bind(this);
         this.checkItem = this.checkItem.bind(this);
         this.removeItem = this.removeItem.bind(this);
+        this.handleClickClose = this.handleClickClose.bind(this);
     }
 
     onSubmit(values) {
@@ -76,6 +77,11 @@ class FormCreate extends Component {
                 users: [...users, user]
             });
         }
+    }
+
+    handleClickClose() {
+        const { myCloseCreateProject } = this.props;
+        myCloseCreateProject();
     }
 
     validateUser(Alert) {
@@ -211,7 +217,11 @@ class FormCreate extends Component {
                         >
                             Crear Proyecto
                         </Button>{' '}
-                        <Button type="button" bsStyle="default">
+                        <Button
+                            type="button"
+                            bsStyle="default"
+                            onClick={this.handleClickClose}
+                        >
                             Cancelar
                         </Button>
                     </form>

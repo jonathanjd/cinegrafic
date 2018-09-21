@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import NavBar from '../Share/NavBar';
 import MyMessage from '../Share/Message';
 import MyFormCreate from './FormCreate';
+import MyTable from './MyTable';
 import { Grid, Col, Row, Panel } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ClipLoader } from 'react-spinners';
@@ -23,8 +24,9 @@ class Project extends Component {
     }
 
     componentDidMount() {
-        const { fetchUserList } = this.props;
+        const { fetchUserList, fetchProjectList } = this.props;
         fetchUserList();
+        fetchProjectList();
     }
 
     componentDidUpdate() {
@@ -67,7 +69,9 @@ class Project extends Component {
             myMessageMessage,
             myUsers,
             fetchProjectCreate,
-            changeMessageAlert
+            changeMessageAlert,
+            myLoading,
+            myProjects
         } = this.props;
 
         return (
@@ -108,6 +112,21 @@ class Project extends Component {
                                 myChangeMessageAlert={changeMessageAlert}
                             />
                         ) : null}
+                        <Col sm={12}>
+                            <Panel>
+                                <Panel.Body>
+                                    {myLoading ? (
+                                        <ClipLoader
+                                            sizeUnit={'px'}
+                                            size={50}
+                                            color={'#337ab7'}
+                                        />
+                                    ) : (
+                                        <MyTable myProjects={myProjects} />
+                                    )}
+                                </Panel.Body>
+                            </Panel>
+                        </Col>
                     </Row>
                 </Grid>
             </Fragment>

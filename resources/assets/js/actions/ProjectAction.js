@@ -8,6 +8,9 @@ import {
     FETCH_PROJECT_CREATE_REQUEST,
     FETCH_PROJECT_CREATE_SUCCESS,
     FETCH_PROJECT_CREATE_ERROR,
+    FETCH_PROJECT_LIST_REQUEST,
+    FETCH_PROJECT_LIST_SUCCESS,
+    FETCH_PROJECT_LIST_ERROR,
 } from './actionTypes';
 
 import {
@@ -31,6 +34,27 @@ export const fetchProjectCreate = (data) => dispatch => {
             }
         }).catch(error => {
             dispatch(error(FETCH_PROJECT_CREATE_ERROR, error.response));
+            reject();
+        });
+
+    });
+
+}
+
+export const fetchProjectList = () => dispatch => {
+    dispatch(request(FETCH_PROJECT_LIST_REQUEST));
+
+    return new Promise((resolve, reject) => {
+        axios.get(`${myURL}/projects`).then(response => {
+            if (response.status === 200) {
+                dispatch(received(FETCH_PROJECT_LIST_SUCCESS, response.data));
+                resolve();
+            } else {
+                dispatch(error(FETCH_PROJECT_LIST_ERROR, response.data));
+                reject();
+            }
+        }).catch(error => {
+            dispatch(error(FETCH_PROJECT_LIST_ERROR, error.response));
             reject();
         });
 

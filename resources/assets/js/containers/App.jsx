@@ -12,7 +12,8 @@ import {
     faUserPlus,
     faUsers,
     faCheck,
-    faTrash
+    faTrash,
+    faEye
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -27,7 +28,8 @@ library.add(
     faUserPlus,
     faUsers,
     faCheck,
-    faTrash
+    faTrash,
+    faEye
 );
 
 const App = props => {
