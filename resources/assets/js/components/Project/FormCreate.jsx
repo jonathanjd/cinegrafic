@@ -34,7 +34,8 @@ class FormCreate extends Component {
             reset,
             myCloseCreateProject,
             myShowMessage,
-            myChangeMessageAlert
+            myChangeMessageAlert,
+            myFetchProjectList
         } = this.props;
         const data = {};
         data.cod = values.cod;
@@ -49,6 +50,7 @@ class FormCreate extends Component {
             myFetchProjectCreate(data).then(() => {
                 myChangeMessageAlert(message);
                 myShowMessage();
+                myFetchProjectList();
                 reset();
                 myCloseCreateProject();
             });

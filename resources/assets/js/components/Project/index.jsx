@@ -4,6 +4,7 @@ import MyMessage from '../Share/Message';
 import MyFormCreate from './FormCreate';
 import MyTable from './MyTable';
 import ModalShow from './ModalShow';
+import ModalDelete from './ModalDelete';
 import Pagination from '../Share/Pagination';
 import { Grid, Col, Row, Panel } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,7 +17,8 @@ class Project extends Component {
             showFormCreate: false,
             showFormEdit: false,
             showAlertMessage: false,
-            show: false
+            show: false,
+            showDelete: false
         };
 
         this.handleClickCreateProject = this.handleClickCreateProject.bind(
@@ -26,6 +28,8 @@ class Project extends Component {
         this.showMessage = this.showMessage.bind(this);
         this.showModalOpen = this.showModalOpen.bind(this);
         this.showModalClose = this.showModalClose.bind(this);
+        this.showModalDeleteOpen = this.showModalDeleteOpen.bind(this);
+        this.showModalDeleteClose = this.showModalDeleteClose.bind(this);
     }
 
     componentDidMount() {
@@ -81,8 +85,27 @@ class Project extends Component {
         });
     }
 
+    showModalDeleteOpen(data) {
+        const { getProjectData } = this.props;
+        this.setState({
+            showDelete: true
+        });
+        getProjectData(data);
+    }
+
+    showModalDeleteClose() {
+        this.setState({
+            showDelete: false
+        });
+    }
+
     render() {
-        const { showAlertMessage, showFormCreate, show } = this.state;
+        const {
+            showAlertMessage,
+            showFormCreate,
+            show,
+            showDelete
+        } = this.state;
         const {
             myMessageType,
             myMessageMessage,
@@ -95,7 +118,9 @@ class Project extends Component {
             myNextPageUrl,
             fetchPagination,
             myProject,
-            myUsersByProject
+            myUsersByProject,
+            fetchProjectList,
+            fetchProjectDelete
         } = this.props;
 
         return (
@@ -134,6 +159,7 @@ class Project extends Component {
                                 myCloseCreateProject={this.myCloseCreateProject}
                                 myShowMessage={this.showMessage}
                                 myChangeMessageAlert={changeMessageAlert}
+                                myFetchProjectList={fetchProjectList}
                             />
                         ) : null}
                         <Col sm={12}>
@@ -151,6 +177,9 @@ class Project extends Component {
                                                 myProjects={myProjects}
                                                 fncShowModalOpen={
                                                     this.showModalOpen
+                                                }
+                                                fncShowModalDeleteOpen={
+                                                    this.showModalDeleteOpen
                                                 }
                                             />
                                             <Pagination
@@ -171,6 +200,18 @@ class Project extends Component {
                                 myLoading={myLoading}
                                 myProject={myProject}
                                 myUsersByProject={myUsersByProject}
+                            />
+                            {/* My Modal Delete Project */}
+                            <ModalDelete
+                                myShowDelete={showDelete}
+                                myProject={myProject}
+                                fncShowModalDeleteClose={
+                                    this.showModalDeleteClose
+                                }
+                                fncFetchProjectDelete={fetchProjectDelete}
+                                fncFetchProjectList={fetchProjectList}
+                                fncShowMessage={this.showMessage}
+                                fncChangeMessageAlert={changeMessageAlert}
                             />
                         </Col>
                     </Row>

@@ -12,6 +12,10 @@ import {
     FETCH_PROJECT_SHOW_REQUEST,
     FETCH_PROJECT_SHOW_SUCCESS,
     FETCH_PROJECT_SHOW_ERROR,
+    FETCH_PROJECT_DELETE_REQUEST,
+    FETCH_PROJECT_DELETE_SUCCESS,
+    FETCH_PROJECT_DELETE_ERROR,
+    GET_PROJECT_DATA,
 } from '../actions/actionTypes';
 
 // Initial State
@@ -114,6 +118,32 @@ export default function userReducer(state = initialState, action) {
                 ...state,
                 loading: false,
                 message: action.payload
+            };
+
+        case FETCH_PROJECT_DELETE_REQUEST:
+            return {
+                ...state,
+                loading: true
+            };
+
+        case FETCH_PROJECT_DELETE_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                message: action.payload
+            };
+
+        case FETCH_PROJECT_DELETE_ERROR:
+            return {
+                ...state,
+                loading: false,
+                message: action.payload
+            };
+
+        case GET_PROJECT_DATA:
+            return {
+                ...state,
+                project: action.payload
             };
 
         default:

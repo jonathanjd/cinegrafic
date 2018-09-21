@@ -33,9 +33,9 @@ class ModalShow extends Component {
                     {user.username}{' '}
                     <Label
                         bsStyle={
-                            user[2] === 'admin'
+                            user.role === 'admin'
                                 ? 'primary'
-                                : user[2] === 'editor'
+                                : user.role === 'editor'
                                     ? 'danger'
                                     : 'info'
                         }

@@ -17,6 +17,7 @@ class CreateProjectsTable extends Migration
             $table->increments('id');
             $table->string('cod')->unique();
             $table->string('name');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

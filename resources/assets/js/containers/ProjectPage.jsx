@@ -4,7 +4,9 @@ import { changeMessageAlert } from '../actions/MessageActions';
 import {
     fetchProjectCreate,
     fetchProjectList,
-    fetchProjectShow
+    fetchProjectShow,
+    fetchProjectDelete,
+    getProjectData
 } from '../actions/ProjectAction';
 import { fetchUserList } from '../actions/UserActions';
 import { fetchPagination } from '../actions/PaginationAction';
@@ -29,6 +31,8 @@ export default connect(
         fetchUserList,
         fetchProjectList,
         fetchPagination,
-        fetchProjectShow
+        fetchProjectShow,
+        fetchProjectDelete,
+        getProjectData
     }
 )(Project);
